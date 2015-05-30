@@ -22,7 +22,7 @@ public:
         return vec[el];
     }
     
-    bool DFSFindCycle(Graph, int, int, stack<Node>);
+    bool DFSFindCycle(Graph*, int);
     
 private:
     vector <Node> vec;

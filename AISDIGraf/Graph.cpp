@@ -12,68 +12,36 @@ void Graph::addNode(double xCoordinate, double yCoordinate)
     vec.push_back(tmpNode);
     //213
 }
-/*
 
-bool DFSfindCycle(slistEl ** graf, int v, int w, stack & S, bool * visited)
+bool Graph::DFSFindCycle(Graph *g, int sought)
 {
-    int u;
-    slistEl * p;
-    
-    visited[w] = true;             // Oznaczamy wierzchołek jako odwiedzony
-    p = graf[w];                   // Rozpoczynamy przeglądanie sąsiadów
-    while(p)
-    {
-        u = p->v;                    // u - numer wierzchołka będącego sąsiadem
-        if(u != S.top())             // Pomijamy wierzchołek, z którego przyszliśmy
-        {
-            S.push(w);                 // Na stos wierzchołek bieżący
-            if(u == v) return true;    // Cykl znaleziony, kończymy
-            if(!visited[u] && DFSfindCycle(graf,v,u,S,visited)) return true;
-            S.pop();
-        }
-        p = p->next;
-    }
-    return false;
-}
+	stack<Node> s;
 
-
-K01:	visited[w] ← true	; oznaczamy bieżący wierzchołek jako odwiedzony
-K02:	Dla każdego sąsiada u wierzchołka w wykonuj K03...K07	; przeglądamy kolejnych sąsiadów wierzchołka w
-K03:	    Jeśli u = S.top(), to następny obieg pętli K02	; sąsiad jest wierzchołkiem, z którego przyszliśmy
-K04:	    S.push(w)	; wierzchołek w umieszczamy na stosie
-K05:	    Jeśli u = v, to zakończ	; znaleźliśmy cykl, kończymy rekurencję
-K06:	    Jeśli (visited[u] = false)   (DFSfindCycle(graf,v,u,S,visited) = true),
-to zakończ z wynikiem true	; rekurencyjnie odwiedzamy nieodwiedzonych sąsiadów
-K07:	    S.pop()	; usuwamy ze stosu wierzchołek bieżący
-K08:	Zakończ z wynikiem false
-
- */
+	for(vector<Node>::iterator iter = vec.begin(); iter != vec.end(); iter++)
+	{
+		iter->visited = false;
+	}
+	
  
-bool Graph::DFSFindCycle(Graph g, int v, int w, stack <Node> s)
-{
-    int u;
-    Graph *elem;
-    
-    g[w].visited = true;
-    elem = g[w];
-    
-    while (elem)
-    {
-        u = elem->v;
-        if(u != s.top())
-        {
-            s.push(w);
-            if(u == v)
-            {
-                return true;
-            }
-            if(g[u].visited && DFSFindCycle(g, v, u, s))
-            {
-                return true;
-            }
-            s.pop();
-        }
-        elem = elem->next;
-    }
-    
+	s.push(sought); //Wrzucamy startujący wierzchołek na stos
+ 
+	while(!s.empty())
+	{
+		sought = s.top();
+		s.pop();//Usuwamy odwiedzany element
+ 
+		printf("\nOdwiedzam: %d\n",sought);
+ 
+		vec[sought].visited = true;
+ 
+		for(int j = n-1; j >= 0;--j)
+		{
+			if(G[j][szukany] != 0 && V[j] == false)
+			{
+				stos.push(j);//Wrzucamy na stos jego sąsiadów
+				V[j] = true;//Znaznaczamy ,że go odwiedzimy!(w niedalekiej przyszłości)
+//Inaczej będziemy mieli np taką sytuację w stosie 2,3,4,2 <-- 2x dwójka
+			}
+		}
+	}
 }

@@ -1,2 +1,2 @@
 all:
-	g++ -o test main.cpp Node.cpp Graph.cpp
+	g++ -o test -std=c++11 main.cpp Node.cpp Graph.cpp
