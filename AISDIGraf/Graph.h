@@ -22,10 +22,12 @@ public:
         return vec[el];
     }
     
-    bool DFSFindCycle(Graph*, int);
+    void DFSFindCycle(int);
+    void DFSFindCycles();
     
 private:
     vector <Node> vec;
+    vector <int> s, t;
 };
 
 
