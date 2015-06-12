@@ -22,8 +22,9 @@ public:
         return vec[el];
     }
     
-    void DFSFindCycle(int);
+    void DFSFindCycle(int, vector<int>&);
     void DFSFindCycles();
+    void PrintCycle(vector<int>&);
     
 private:
     vector <Node> vec;

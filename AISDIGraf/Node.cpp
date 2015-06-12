@@ -12,11 +12,13 @@ Node::Node()
 {
     x = 0;
     y = 0;
+    vertexState = white;
 }
 
 Node::Node(double xCoordinate, double yCoordinate)
 {
     x = xCoordinate;
     y = yCoordinate;
+    vertexState = white;
 }
 

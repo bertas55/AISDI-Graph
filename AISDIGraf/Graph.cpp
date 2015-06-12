@@ -16,140 +16,59 @@ void Graph::addNode(double xCoordinate, double yCoordinate)
 
 void Graph::DFSFindCycles()
 {
+	vector<int> visited;
+	Node actualNode;
 
 	for (int i = 0; i < vec.size(); i++)
 	{
 		for (int j = 0; j < vec.size(); j++)
 		{
-			vec[j].visited = false;
+			vec[j].vertexState = white;
 		}
-		DFSFindCycle(i);
-/*
-
-		if (DFSFindCycle(i) == true)
+		vec[i].vertexState = black;
+		visited.push_back(i);
+		actualNode = vec[i];
+		for (int j = 0; j < actualNode.edge.size(); j++)
 		{
-			   t.push_back(i);
-      while(!s.empty())            // Przerzucamy stos S do stosu T
-      {
-        t.push_back(s.back()); 
-        s.pop_back();
-      }
-
-      while(!t.empty())            // Wyświetlamy ścieżkę
-      {
-        cout << t.back() << " "; 
-        t.pop_back();
-      }
-      cout << endl;
-		      }
-	*/
-		}
-
-
+			DFSFindCycle(vec[i].edge[j].first, visited);
+		}	
+	}
 }
-/*
 
-
-K01:	Utwórz n-elementową tablicę visited	 
-K02:	Utwórz pusty stos S	 
-K03:	Dla i = 0,1,...,n-1: wykonuj K04...K09	 
-K04:	    Ustaw wszystkie elementy visited na false	 
-K05:	    Jeśli DFSfindCycle(graf,i,i,S,visited) = false, to następny obieg pętli K03	; szukamy cyklu, wynik będzie na stosie
-K06:	    Pisz i	; wypisujemy wierzchołek startowy
-K07:	    Dopóki S.empty() = false, wykonuj K08...K09	; wypisujemy wierzchołki tworzące cykl
-K08:	        Pisz S.top()	; wypisujemy wierzchołek
-K09:	        S.pop()	; usuwamy go ze stosu
-K10:	Zakończ
-
-*/
-/*
-bool Graph::DFSFindCycle(int v, int w)
+void Graph::DFSFindCycle(int index, vector <int> &visited)
 {
-	int u;
-	vec[w].visited = true;
-	s.push_back(w);
-	Node p = vec[w];
-	
+	int actualIndex;
+	Node actualNode;
+	visited.push_back(index);
+	actualNode = vec[index];
+	vec[index].vertexState = gray;
 
-	for (int i = 0; i < p.edge.size(); i++)
+	for (int i = 0; i < actualNode.edge.size(); i++)
 	{
+		actualIndex = vec[index].edge[i].first;
 
-		u = p.edge[i].first;
-		if (u== v)
+		if(vec[actualIndex].vertexState == white)
 		{
-			return true;
+			DFSFindCycle(actualIndex, visited);
 		}
-
-		if (!vec[u].visited && DFSFindCycle(v, u))
+		else if(vec[actualIndex].vertexState == black)
 		{
-			return true;
+			PrintCycle(visited);
 		}
-		s.pop_back();
-
-		return false;
+		
 	}
 
 }
 
-*/
-void Graph::DFSFindCycle(int index)
+void Graph::PrintCycle(vector<int> &visited)
 {
-	vector<int> s;
-	vec[index].visited = true;
-
-	s.push_back(index);
-	cout << "==================================" << endl;
-
-	while(!s.empty())
+	for (int i = 0; i < visited.size(); i++)
 	{
-		int act = s.back();	//indeks
-
-//cout << "ACT = " << act << endl;
-
-		s.pop_back();
-
-		//printf("%d ",act);
-
-		vec[index].visited = true;
-
-		for (int i = 0; i < vec[act].edge.size(); i++)
-		{
-			cout << "VECTOR \n";
-			for (int j = 0; j < s.size(); j++)
-			{
-				cout << s[j] << " ";
-			}
-			cout << endl;
-
-			if (vec[act].edge[i].first == index)
-			{
-				cout << vec[act].edge[i].first << " TAK" << endl;
-				//break;
-
-				vec[index].visited = false;
-				//i = i - 2;
-				//s.pop();
-				//continue;
-
-			}
-
-			if (vec[vec[act].edge[i].first].visited == false)
-			{
-				s.push_back(vec[act].edge[i].first);
-				vec[vec[act].edge[i].first].visited = true;
-			}
-		}
+		cout << visited[i] << " ";
 	}
 
-	printf("\n");
-
-	for (int i = 0; i < vec.size(); i++)
-	{
-		vec[i].visited = false;
-	}
-
-		cout << "==================================END" << endl;
+	cout << endl;
+	visited.clear();
 }
-
 
 

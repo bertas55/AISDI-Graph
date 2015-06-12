@@ -5,6 +5,14 @@
 #include <vector>
 using namespace std;
 
+typedef enum State 
+{ 
+	white = 0,
+	gray = 1,
+	black = 2 
+} State;
+    
+
 class Node
 {
 public:
@@ -13,8 +21,9 @@ public:
     
     double x;
     double y;
-    bool visited;
-    
+
+    State vertexState; 
+
     vector <pair<int, double> > edge;
 };
 
