@@ -22,8 +22,10 @@ public:
         return vec[el];
     }
     
-    void DFSFindCycle(int, vector<int>&);
+    void DFSFindCycle(int, vector<int>&, vector<vector<int> >&, double);
     void DFSFindCycles();
+    int CheckIfCycleExist(vector<int>&, vector<vector<int> >&);
+    void ClearStates();
     void PrintCycle(vector<int>&);
     
 private:
