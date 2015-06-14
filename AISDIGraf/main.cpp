@@ -12,9 +12,11 @@ int main(int argc, const char * argv[])
     string first, second, third;
     double x, y, weight;
     int index1, index2;
+    bool quit;
     
-    while(getline(cin, input))
+    while(getline(cin, input) && !input.empty())
     {
+
         firstSpace = input.find(' ');
         lastSpace = input.rfind(' ');
         
@@ -37,8 +39,22 @@ int main(int argc, const char * argv[])
             index1 = stoi(first);
             index2 = stoi(second);
             weight = stod(third);
+
+            quit = false;
+            for(int i = 0; i < g[index1].edge.size(); i++)
+            {
+                if(g[index1].edge[i].first == index2)
+                {
+                    g[index1].edge[i].second = weight;
+                    quit = true;
+                }
+            }
             
-            g[index1].edge.push_back(make_pair(index2, weight));
+            if(!quit)
+            {
+                g[index1].edge.push_back(make_pair(index2, weight));
+            }
+            
             
         }
         

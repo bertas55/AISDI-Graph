@@ -55,6 +55,8 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 			pathWeight += actualNode.edge[i].second;
 			tmpInt = CheckIfCycleExist(visited, cycles);
 
+
+
 			if(tmpInt == -1 && visited.size() % 2)
 			{
 
@@ -68,6 +70,7 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 		{
 			pathWeight += actualNode.edge[i].second;
 			DFSFindCycle(actualIndex, visited, cycles, pathWeight);
+			vec[actualIndex].vertexState = white;
 			visited.pop_back();
 			pathWeight -= actualNode.edge[i].second;
 		}

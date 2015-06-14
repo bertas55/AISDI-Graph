@@ -28,7 +28,7 @@ public:
     void ClearStates();
     void PrintCycle(vector<int>&);
     
-private:
+
     vector <Node> vec;
     vector <int> s, t;
 };
