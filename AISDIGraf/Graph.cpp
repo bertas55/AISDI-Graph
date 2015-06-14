@@ -10,7 +10,6 @@ void Graph::addNode(double xCoordinate, double yCoordinate)
 {
     Node tmpNode(xCoordinate, yCoordinate);
     vec.push_back(tmpNode);
-    //213
 }
 
 void Graph::DFSFindCycles()
@@ -31,9 +30,7 @@ void Graph::DFSFindCycles()
 			vec[i].vertexState = black;
 			visited.push_back(i);
 			pathWeight = actualNode.edge[j].second;
-
 			DFSFindCycle(actualNode.edge[j].first, visited, cycles, pathWeight);
-			
 		}	
 	}
 }
@@ -41,13 +38,12 @@ void Graph::DFSFindCycles()
 void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > &cycles, double pathWeight)
 {
 	int actualIndex, tmpInt;
-
 	Node actualNode;
+	bool onlyGray;
+
 	visited.push_back(index);
 	actualNode = vec[index];
 	vec[index].vertexState = gray;
-
-
 
 	for (int i = 0; i < actualNode.edge.size(); i++)
 	{
@@ -56,20 +52,26 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 		if(vec[actualIndex].vertexState == black)
 		{
 			visited.push_back(actualIndex);
+			pathWeight += actualNode.edge[i].second;
 			tmpInt = CheckIfCycleExist(visited, cycles);
-			if(tmpInt < 0)
+
+			if(tmpInt == -1 && visited.size() % 2)
 			{
-				pathWeight += actualNode.edge[i].second;
+
 				PrintCycle(cycles.back());
-				cout << pathWeight << endl;
+				cout << pathWeight << endl;;
 			}
-			return;
+			visited.pop_back();
+			pathWeight -= actualNode.edge[i].second; 
 		}
 		else if(vec[actualIndex].vertexState == white)
 		{
 			pathWeight += actualNode.edge[i].second;
 			DFSFindCycle(actualIndex, visited, cycles, pathWeight);
+			visited.pop_back();
+			pathWeight -= actualNode.edge[i].second;
 		}
+
 	}
 }
 
@@ -91,75 +93,44 @@ void Graph::PrintCycle(vector<int> &visited)
 
 int Graph::CheckIfCycleExist(vector<int> &visited, vector<vector<int> > &cycles)
 {
-	bool exact = true, quit = false;
-	int j, k;
+	bool exist = true, quit = false;
+	int indexNewCycle, indexOldCycle, sizeNewCycle, sizeOldCycle;
 
-	if(cycles.empty())
+	sizeNewCycle = visited.size() - 1;
+
+	for(int i = 0; i < cycles.size(); i++)
 	{
-		cycles.push_back(visited);
-	}
-	else
-	{
-		for(int i = 0; i < cycles.size(); i++)
+		sizeOldCycle = cycles[i].size() - 1;
+		exist = true;
+
+		if(sizeOldCycle == sizeNewCycle)
 		{
-			exact = true;
-			quit = false;
-
-			if(visited.size() == cycles[i].size())
+			indexNewCycle = 0;
+			indexOldCycle = 0;
+			while(indexOldCycle < sizeOldCycle && visited[0] != cycles[i][indexOldCycle])
 			{
-				j = 0;
-				k = 0;
+				indexOldCycle++;
+			}
+			if(indexOldCycle >= sizeOldCycle)
+			{
+				exist = false;
+			}
+			for(; indexNewCycle < sizeNewCycle && indexOldCycle < sizeOldCycle; indexNewCycle++, indexOldCycle++)
+			{
+				if(visited[indexNewCycle] != cycles[i][indexOldCycle % sizeOldCycle])
+				{
+					exist = false;
+				}
+			}
 
-				while(j < visited.size() && k < visited.size() && visited[j] != cycles[i][k])
-				{
-					k++;
-				}
-				while(j < visited.size() && k < visited.size())
-				{
-					if(visited[j] != cycles[i][k])
-					{
-						exact = false;
-						quit = true;
-						break;
-					}
-					j++;
-					k++;
-				}
-
-
-				if(k > j)
-				{
-					k = 0;
-					j++;
-				}
-				else
-				{
-					j = 0;
-					k++;
-				}
-
-				while(j < visited.size() && k < visited.size() && !quit)
-				{
-					if(visited[j] != cycles[i][k])
-					{
-						exact = false;
-						quit = true;
-						break;
-					}
-					j++;
-					k++;
-				}
-
-				if (exact)
-				{
-					return i;
-				}
-				
+			if(exist)
+			{
+				return i;
 			}
 		}
-		cycles.push_back(visited);
 	}
+	
+	cycles.push_back(visited);
 	return -1;
 }
-
 

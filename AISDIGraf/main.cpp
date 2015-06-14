@@ -46,6 +46,5 @@ int main(int argc, const char * argv[])
 
     g.DFSFindCycles();
     
-    
     return 0;
 }
