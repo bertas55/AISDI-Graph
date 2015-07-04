@@ -27,10 +27,8 @@ public:
     int CheckIfCycleExist(vector<int>&, vector<vector<int> >&);
     void ClearStates();
     void PrintCycle(vector<int>&);
-    
 
     vector <Node> vec;
-    vector <int> s, t;
 };
 
 

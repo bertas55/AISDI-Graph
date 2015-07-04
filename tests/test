@@ -1,0 +1,25 @@
+#!/bin/bash
+
+echo "TEST 1 (graf przykladowy)"
+../graph < test1.in
+echo "TEST 2 (graf pusty)"
+../graph < test2.in
+echo "TEST 3 (graf jednowierzcholkowy, brak krawedzi)"
+../graph < test3.in
+echo "TEST 4 (graf liniowy)"
+../graph < test4.in
+echo "TEST 5 (graf pelny 3 wierzcholki bez cykli)"
+../graph < test5.in
+echo "TEST 6 (graf pelny 3 wierzcholki cykl)"
+../graph < test6.in
+echo "TEST 7 (graf pelny 4 wierzcholki)"
+../graph < test7.in
+echo "TEST 8 (graf pelny 4 wierzcholki, bez cyklu)"
+../graph < test8.in
+echo "TEST 9"
+../graph < test9.in
+echo "TEST 10 (zamiania wag krawedzi test9)"
+../graph < test10.in
+
+
+

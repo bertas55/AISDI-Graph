@@ -1,10 +1,8 @@
 #include "Graph.h"
 #include "Node.h"
 #include <vector>
-#include <stack>
 #include <iostream>
 using namespace std;
-
 
 void Graph::addNode(double xCoordinate, double yCoordinate)
 {
@@ -39,7 +37,6 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 {
 	int actualIndex, tmpInt;
 	Node actualNode;
-	bool onlyGray;
 
 	visited.push_back(index);
 	actualNode = vec[index];
@@ -55,11 +52,8 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 			pathWeight += actualNode.edge[i].second;
 			tmpInt = CheckIfCycleExist(visited, cycles);
 
-
-
 			if(tmpInt == -1 && visited.size() % 2)
 			{
-
 				PrintCycle(cycles.back());
 				cout << pathWeight << endl;;
 			}
@@ -74,7 +68,6 @@ void Graph::DFSFindCycle(int index, vector <int> &visited, vector<vector<int> > 
 			visited.pop_back();
 			pathWeight -= actualNode.edge[i].second;
 		}
-
 	}
 }
 
